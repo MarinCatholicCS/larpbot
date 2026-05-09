@@ -724,28 +724,6 @@ section {
 }
 .final-cta p { color: #888; max-width: 500px; margin: 0 auto 30px; line-height: 1.7; }
 
-/* ── FOOTER ── */
-footer {
-  background: #000;
-  border-top: 1px solid rgba(255,255,255,0.06);
-  padding: 40px 20px;
-  text-align: center;
-  font-size: 0.75rem;
-  color: #444;
-  letter-spacing: 1px;
-}
-footer .footer-logo {
-  font-family: 'Bangers', cursive;
-  font-size: 2rem;
-  letter-spacing: 4px;
-  color: var(--neon-pink);
-  margin-bottom: 12px;
-  display: block;
-  text-shadow: 0 0 20px var(--neon-pink);
-}
-.footer-links { display: flex; gap: 20px; justify-content: center; margin: 14px 0; flex-wrap: wrap; }
-.footer-links a { color: #444; text-decoration: none; font-size: 0.7rem; transition: color 0.2s; letter-spacing: 2px; text-transform: uppercase; }
-.footer-links a:hover { color: var(--neon-pink); }
 
 /* ── JOB ROWS ── */
 .job-row {
@@ -786,6 +764,221 @@ footer .footer-logo {
   display: none;
 }
 .job-row:hover .job-desc { display: block; color: #999; }
+
+/* ── EXEC CARDS ── */
+.exec-card {
+  background: #0d0d0d;
+  border: 1px solid rgba(255,255,255,0.07);
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.exec-card:hover {
+  border-color: rgba(255,255,255,0.18);
+  transform: translateY(-4px);
+  z-index: 2;
+}
+.exec-img-wrap {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #111;
+}
+.exec-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+  filter: grayscale(30%) contrast(1.05);
+  transition: filter 0.3s;
+}
+.exec-card:hover .exec-img-wrap img { filter: grayscale(0%) contrast(1.1); }
+
+/* Suit jacket overlay — covers bottom 45% of image */
+.exec-suit {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 45%;
+  background: linear-gradient(180deg, #161a22 0%, #0d1018 100%);
+  clip-path: polygon(0 20%, 28% 0%, 50% 15%, 72% 0%, 100% 20%, 100% 100%, 0 100%);
+}
+/* Lapels */
+.exec-suit::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 30%;
+  height: 55%;
+  background: #fff;
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  opacity: 0.06;
+}
+/* White shirt strip */
+.exec-suit::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 14%;
+  height: 100%;
+  background: rgba(240,238,230,0.12);
+}
+/* Tie */
+.exec-tie {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8%;
+  height: 38%;
+  background: #8b1a1a;
+  clip-path: polygon(20% 0%, 80% 0%, 100% 75%, 50% 100%, 0% 75%);
+}
+
+.exec-info {
+  padding: 20px;
+  flex: 1;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.exec-name {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #f0ede6;
+  letter-spacing: 0.5px;
+  margin-bottom: 3px;
+}
+.exec-title-tag {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--neon-pink);
+  margin-bottom: 12px;
+}
+.exec-bio {
+  font-size: 0.75rem;
+  color: #555;
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+.exec-card:hover .exec-bio { color: #777; }
+.exec-links {
+  display: flex;
+  gap: 8px;
+}
+.exec-links span {
+  width: 26px; height: 26px;
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.65rem;
+  color: #444;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.exec-links span:hover { border-color: var(--neon-pink); color: var(--neon-pink); }
+
+/* ── PROFESSIONAL FOOTER ── */
+footer {
+  background: #080808;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 0;
+  font-family: 'Rajdhani', sans-serif;
+}
+.footer-top {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 40px 50px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+@media (max-width: 800px) {
+  .footer-top { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  .footer-top { grid-template-columns: 1fr; padding: 40px 20px; }
+}
+.footer-brand-name {
+  font-family: 'Bangers', cursive;
+  font-size: 1.6rem;
+  letter-spacing: 3px;
+  color: #fff;
+  margin-bottom: 10px;
+  display: block;
+}
+.footer-brand-desc {
+  font-size: 0.78rem;
+  color: #3a3a3a;
+  line-height: 1.8;
+  max-width: 260px;
+  margin-bottom: 20px;
+}
+.footer-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.footer-badge {
+  font-size: 0.58rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #333;
+  border: 1px solid #222;
+  padding: 3px 8px;
+}
+.footer-col-label {
+  font-size: 0.62rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 16px;
+  display: block;
+  font-weight: 700;
+}
+.footer-col a {
+  display: block;
+  font-size: 0.78rem;
+  color: #3a3a3a;
+  text-decoration: none;
+  margin-bottom: 10px;
+  transition: color 0.15s;
+  letter-spacing: 0.3px;
+}
+.footer-col a:hover { color: #aaa; }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.04);
+  padding: 20px 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.footer-legal {
+  font-size: 0.65rem;
+  color: #242424;
+  line-height: 1.7;
+  max-width: 700px;
+}
+.footer-social {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.footer-social a {
+  width: 32px; height: 32px;
+  border: 1px solid #1e1e1e;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem;
+  color: #2a2a2a;
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+.footer-social a:hover { border-color: var(--neon-pink); color: var(--neon-pink); }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 600px) {
@@ -1433,6 +1626,89 @@ footer .footer-logo {
 
 <div class="divider"></div>
 
+<!-- ═══════════════════════════════ LEADERSHIP ═══════════════════════════════ -->
+<section style="max-width:1100px; margin:0 auto; padding:100px 20px;">
+  <div class="section-eyebrow" style="text-align:center; display:block; margin-bottom:14px;">OUR LEADERSHIP</div>
+  <h2 style="font-family:'Bangers',cursive; font-size:clamp(2rem,5vw,3.5rem); letter-spacing:3px; text-align:center; color:#fff; margin-bottom:12px;">THE TEAM BEHIND THE TUNG</h2>
+  <p style="text-align:center; color:#666; max-width:560px; margin:0 auto 60px; font-size:0.88rem; line-height:1.8;">World-class operators. Seasoned executives. Deep percussive expertise. Meet the leadership team driving TungCorp's mission to wake up every human on earth before dawn.</p>
+
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:2px;">
+
+    <div class="exec-card">
+      <div class="exec-img-wrap">
+        <img src="tung/tung1.png" alt="CEO">
+        <div class="exec-suit"></div>
+        <div class="exec-tie"></div>
+      </div>
+      <div class="exec-info">
+        <div class="exec-name">Tung T. Sahur</div>
+        <div class="exec-title-tag">Chief Executive Officer</div>
+        <div class="exec-bio">Previously SVP Percussion at Gartner. Led $14B drum division at McKinsey. 3× Forbes "Most Likely To Wake You Up" list. MIT Sloan, Berklee College of Music.</div>
+        <div class="exec-links"><span>in</span><span>𝕏</span></div>
+      </div>
+    </div>
+
+    <div class="exec-card">
+      <div class="exec-img-wrap">
+        <img src="tung/tung2.png" alt="CTO">
+        <div class="exec-suit"></div>
+        <div class="exec-tie" style="background:#1a3a6b;"></div>
+      </div>
+      <div class="exec-info">
+        <div class="exec-name">Tung T. Sahur II</div>
+        <div class="exec-title-tag">Chief Technology Officer</div>
+        <div class="exec-bio">Former VP Engineering at Stripe, Google, and an undisclosed drum-related startup. Built TungStack™ v1 in a single 72-hour Sahur session. Stanford CS, PhD Percussive Systems.</div>
+        <div class="exec-links"><span>in</span><span>𝕏</span></div>
+      </div>
+    </div>
+
+    <div class="exec-card">
+      <div class="exec-img-wrap">
+        <img src="tung/tung3.jpg" alt="CDO">
+        <div class="exec-suit" style="background:linear-gradient(180deg,#1a2a1a 0%,#0d1a0d 100%);"></div>
+        <div class="exec-tie" style="background:#1a4a1a;"></div>
+      </div>
+      <div class="exec-info">
+        <div class="exec-name">T.T. Sahur-Jones</div>
+        <div class="exec-title-tag">Chief Drum Officer</div>
+        <div class="exec-bio">The world's only C-suite executive whose primary qualification is being extremely good at drums. 22 years of enterprise percussion. Named "Most Impactful Drummer in Enterprise SaaS" by Drum Business Weekly, 4 years running.</div>
+        <div class="exec-links"><span>in</span><span>𝕏</span></div>
+      </div>
+    </div>
+
+    <div class="exec-card">
+      <div class="exec-img-wrap">
+        <img src="tung/tung4.jpg" alt="CFO">
+        <div class="exec-suit" style="background:linear-gradient(180deg,#1e1a2a 0%,#110e1a 100%);"></div>
+        <div class="exec-tie" style="background:#3a1a6b;"></div>
+      </div>
+      <div class="exec-info">
+        <div class="exec-name">Sahur Tungsworth</div>
+        <div class="exec-title-tag">Chief Financial Officer</div>
+        <div class="exec-bio">Former CFO of Palantir's Percussive Intelligence Division. Structured our $2.4B Series C. Believes all financial models should include a "tung frequency" variable. Wharton MBA. Sleeps 3 hours a night, voluntarily.</div>
+        <div class="exec-links"><span>in</span><span>𝕏</span></div>
+      </div>
+    </div>
+
+    <div class="exec-card">
+      <div class="exec-img-wrap">
+        <img src="tung/tung5.jpg" alt="CPO">
+        <div class="exec-suit" style="background:linear-gradient(180deg,#2a1a1a 0%,#1a0d0d 100%);"></div>
+        <div class="exec-tie" style="background:#6b1a1a;"></div>
+      </div>
+      <div class="exec-info">
+        <div class="exec-name">Dr. Tung Sahurova</div>
+        <div class="exec-title-tag">Chief Product Officer</div>
+        <div class="exec-bio">PhD in Human-Percussion Interaction from Oxford. Built the original Sahur Experience roadmap on a napkin at 3AM in Jakarta. Author of "The Product of Waking Up: A Percussive Framework for Modern Enterprise." Available on Audible, narrated in drum.</div>
+        <div class="exec-links"><span>in</span><span>𝕏</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <!-- ═══════════════════════════════ FINAL CTA ═══════════════════════════════ -->
 <div class="final-cta">
   <div class="section-eyebrow" style="justify-content:center; display:flex; margin-bottom:20px;">🥁 THE FINAL WORD 🥁</div>
@@ -1451,26 +1727,58 @@ footer .footer-logo {
 
 <!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
 <footer>
-  <span class="footer-logo">TungCorp™</span>
-  <p style="font-size:0.7rem; color:#333; letter-spacing:2px; text-transform:uppercase; margin-bottom:20px;">Percussive Solutions Enterprise · Series C · $2.4B Valuation</p>
-  <p style="margin-bottom:20px; line-height:1.9; color:#444; font-size:0.8rem;">
-    Headquarters: Jakarta, Indonesia &nbsp;·&nbsp; New York &nbsp;·&nbsp; London &nbsp;·&nbsp; Singapore &nbsp;·&nbsp; The Cloud<br>
-    ISO 9001 Certified Percussive Operations &nbsp;·&nbsp; SOC 2 Type II Compliant Sahur Delivery &nbsp;·&nbsp; GDPR Tung-Ready<br>
-    Backed by Sequoia, a16z, Tiger Global, and a very confident drum &nbsp;·&nbsp; Board Observer: The Tung Itself
-  </p>
-  <div class="footer-links">
-    <a href="#">Product</a>
-    <a href="#">Enterprise</a>
-    <a href="#careers">Careers (47 Open Roles)</a>
-    <a href="#">Press</a>
-    <a href="#">Investor Relations</a>
-    <a href="#">Privacy Policy</a>
-    <a href="#">Terms of Service</a>
-    <a href="#">Security</a>
-    <a href="#">Accessibility</a>
-    <a href="#">Cookie Preferences</a>
+  <div class="footer-top">
+    <div class="footer-brand-col">
+      <span class="footer-brand-name">TungCorp™</span>
+      <p class="footer-brand-desc">The world's leading AI-powered percussive awakening platform. Trusted by 847 enterprise customers across 192 countries. Series C · $2.4B valuation.</p>
+      <div class="footer-badges">
+        <span class="footer-badge">ISO 9001</span>
+        <span class="footer-badge">SOC 2 Type II</span>
+        <span class="footer-badge">GDPR</span>
+        <span class="footer-badge">CCPA</span>
+        <span class="footer-badge">Tung Certified™</span>
+      </div>
+    </div>
+    <div class="footer-col">
+      <span class="footer-col-label">Product</span>
+      <a href="#">TungStack™ Platform</a>
+      <a href="#">Sahur-as-a-Service</a>
+      <a href="#">Enterprise Suite</a>
+      <a href="#">API & Integrations</a>
+      <a href="#">Security</a>
+      <a href="#">Changelog</a>
+    </div>
+    <div class="footer-col">
+      <span class="footer-col-label">Company</span>
+      <a href="#">About TungCorp</a>
+      <a href="#">Leadership</a>
+      <a href="#careers">Careers — 47 Open Roles</a>
+      <a href="#">Press & Media</a>
+      <a href="#">Investor Relations</a>
+      <a href="#">Contact</a>
+    </div>
+    <div class="footer-col">
+      <span class="footer-col-label">Resources</span>
+      <a href="#">Documentation</a>
+      <a href="#">Tung University</a>
+      <a href="#">Community</a>
+      <a href="#">Blog</a>
+      <a href="#">Status Page</a>
+      <a href="#">Cookie Preferences</a>
+    </div>
   </div>
-  <p style="margin-top:24px; font-size:0.68rem; color:#2a2a2a;">© 2025 TungCorp Inc. All rights reserved. "TungCorp", "TungStack", "Sahur-as-a-Service", "SaaS (Sahur)", and "The Tung" are registered trademarks of TungCorp Inc. Any unauthorized tung is strictly prohibited and may result in legal action, social ostracism, and permanent removal from the pre-dawn notification ecosystem. TungCorp is an equal opportunity employer. This is a real company. Do not question the tung.</p>
+
+  <div class="footer-bottom">
+    <p class="footer-legal">
+      © 2025 TungCorp Inc. All rights reserved. "TungCorp", "TungStack™", "Sahur-as-a-Service™", and "The Tung" are registered trademarks of TungCorp Inc. Backed by Sequoia, a16z, Tiger Global, and a very confident drum. Board Observer: The Tung Itself. TungCorp is an equal opportunity employer. This is a real company.
+    </p>
+    <div class="footer-social">
+      <a href="#">in</a>
+      <a href="#">𝕏</a>
+      <a href="#">▶</a>
+      <a href="#">🥁</a>
+    </div>
+  </div>
 </footer>
 
 <script>
