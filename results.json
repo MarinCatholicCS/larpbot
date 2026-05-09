@@ -1,0 +1,106 @@
+{
+  "candidate": "stananan",
+  "githubUrl": "https://github.com/stananan",
+  "analyzedRepos": [
+    "react-dashboard",
+    "ml-pipeline-demo",
+    "distributed-auth-service"
+  ],
+  "overallLarpScore": 84,
+  "overallVerdict": "Aggressively inflated. The GitHub tells a different story than the pitch.",
+  "subscores": {
+    "skillInflation": 91,
+    "projectSubstance": 78,
+    "roleAuthenticity": 88,
+    "codeDepth": 72
+  },
+  "claims": [
+    {
+      "claim": "3 years of React experience",
+      "verdict": "CONTRADICTED",
+      "confidence": 0.91,
+      "summary": "React activity spans 7 months, not 3 years. Earliest React commit dates to April 2024.",
+      "evidence": "Oldest React repo created April 2024. No React code before that. Total React LOC across all repos: 2,847 — one semester of weekend projects, not three years.",
+      "receipts": [
+        {
+          "type": "repo",
+          "label": "Oldest React repo",
+          "detail": "react-dashboard created April 14, 2024 — 7 months ago, not 3 years",
+          "url": "https://github.com/stananan/react-dashboard"
+        },
+        {
+          "type": "commit",
+          "label": "First React commit",
+          "detail": "\"init react app\" — April 14, 2024",
+          "url": "https://github.com/stananan/react-dashboard/commit/a1b2c3d"
+        },
+        {
+          "type": "pattern",
+          "label": "Total React LOC",
+          "detail": "2,847 lines across 3 repos. Consistent with ~6 months of part-time work.",
+          "url": "https://github.com/stananan"
+        }
+      ],
+      "whatToAskNext": "Ask them to walk through a React performance issue they debugged — specifically why they chose their state management approach and what they'd do differently now."
+    },
+    {
+      "claim": "Built a production ML pipeline",
+      "verdict": "UNVERIFIED",
+      "confidence": 0.87,
+      "summary": "Found an ML-adjacent repo but no evidence of production deployment. It's a Jupyter notebook with hardcoded sample data.",
+      "evidence": "ml-pipeline-demo contains 1 notebook, 340 lines, sample CSV hardcoded as input, no deployment config, no CI, no requirements.txt pinned versions. README claims 'serves predictions in real-time' — no server code found.",
+      "receipts": [
+        {
+          "type": "file",
+          "label": "README claim vs reality",
+          "detail": "README: 'production ML pipeline serving real-time predictions.' Repo contents: 1 Jupyter notebook, 1 CSV file, no API, no server.",
+          "url": "https://github.com/stananan/ml-pipeline-demo/blob/main/README.md"
+        },
+        {
+          "type": "file",
+          "label": "No deployment config",
+          "detail": "No Dockerfile, no CI/CD, no requirements.txt, no .env.example. Nothing that suggests this ever ran outside a laptop.",
+          "url": "https://github.com/stananan/ml-pipeline-demo"
+        },
+        {
+          "type": "commit",
+          "label": "Suspiciously linear history",
+          "detail": "14 commits, all in a single 6-hour window on Nov 3. No iteration, no debugging, no reverts.",
+          "url": "https://github.com/stananan/ml-pipeline-demo/commits/main"
+        }
+      ],
+      "whatToAskNext": "Ask them to describe the infrastructure — where it ran, how predictions were served, what the latency was, how they monitored it. If it was production, they'll have instant answers."
+    },
+    {
+      "claim": "Led backend architecture for a real-time system",
+      "verdict": "CONTRADICTED",
+      "confidence": 0.83,
+      "summary": "Found the repo. Candidate authored 9% of commits. All contributions were in a single 3-day window after the core architecture was already in place.",
+      "evidence": "distributed-auth-service: 247 commits total. Candidate: 22 commits. Core architecture — WebSocket layer, Redis pub/sub, connection pooling — committed by @nico-dev across weeks 1–4. Candidate joined in week 5, contributed UI glue code and README.",
+      "receipts": [
+        {
+          "type": "pattern",
+          "label": "Commit attribution",
+          "detail": "22 of 247 commits (9%). Architecture commits: 0. Contributions: README, minor config changes, one bugfix.",
+          "url": "https://github.com/stananan/distributed-auth-service/graphs/contributors"
+        },
+        {
+          "type": "commit",
+          "label": "Architecture already done",
+          "detail": "WebSocket layer implemented by @nico-dev on Oct 1. Candidate's first commit: Oct 29 — 'update readme and fix typo'",
+          "url": "https://github.com/stananan/distributed-auth-service/commit/f4e5d6c"
+        },
+        {
+          "type": "file",
+          "label": "Core architecture files",
+          "detail": "websocket.ts, redis-pubsub.ts, connection-pool.ts — all authored by @nico-dev, zero commits from candidate on these files.",
+          "url": "https://github.com/stananan/distributed-auth-service/blob/main/src/websocket.ts"
+        }
+      ],
+      "whatToAskNext": "Ask them to draw the architecture from memory — specifically the connection pooling strategy and why they chose Redis pub/sub over alternatives. Ask what they'd change if rebuilding it today."
+    }
+  ],
+  "redemption": "The React Dashboard has genuinely thoughtful component composition for someone 7 months in. The custom hook pattern in useDataFetcher.ts shows real understanding, not just tutorial copying. There's a developer here — just not the one described.",
+  "analyzedAt": "2026-05-09T14:32:11Z"
+}
+
