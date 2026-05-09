@@ -98,29 +98,28 @@ export default function Landing() {
   const [howItWorks, setHowItWorks] = useState(false);
 
   const headingA = (
-    <h1 className="text-5xl md:text-6xl font-black tracking-tight text-white leading-[1.08] text-center">
+    <h1 className="text-5xl md:text-6xl font-black tracking-tight text-white leading-[1.08] text-center" style={{ fontFamily: "'Orbitron', sans-serif" }}>
       Stop hiring{" "}
-      <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-violet-400">
-        LARPers
-      </span>
+      <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-violet-400">LARP</span><span className="text-white">ers</span>
     </h1>
   );
 
   const headingB = (
-    <h1 className="text-5xl md:text-6xl font-black tracking-tight text-white leading-[1.08] text-center">
+    <h1 className="text-5xl md:text-6xl font-black tracking-tight text-white leading-[1.08] text-center" style={{ fontFamily: "'Orbitron', sans-serif" }}>
       How it works
     </h1>
   );
 
   const paraA = (
-    <div className="flex flex-col items-center gap-3 w-full max-w-sm">
+    <div className="flex flex-col items-center gap-3 w-full max-w-3xl">
       <div className="w-full flex rounded-lg overflow-hidden border border-slate-700 bg-slate-800/60 focus-within:border-sky-500 transition-colors">
         <input
           type="email"
           placeholder="you@company.com"
-          className="flex-1 bg-transparent px-4 py-3 text-sm text-white placeholder-slate-500 outline-none"
+          className="flex-1 bg-transparent px-6 py-5 text-base text-white placeholder-slate-500 outline-none"
+          style={{ fontFamily: "'Inconsolata', monospace" }}
         />
-        <button className="px-4 py-3 bg-sky-500 hover:bg-sky-400 text-white text-sm font-semibold transition-colors whitespace-nowrap">
+        <button className="px-6 py-5 bg-sky-500 hover:bg-sky-400 text-white text-base font-semibold transition-colors whitespace-nowrap">
           Connect Google
         </button>
       </div>
@@ -129,18 +128,18 @@ export default function Landing() {
 
   const paraB = (
     <p className="text-slate-300 text-lg leading-relaxed text-center max-w-xl">
-      When a candidate reaches out, TensorLink activates LARPbot — an agent that
+      When a candidate reaches out, TensorLake activates LARPbot — an agent that
       starts investigating before you ever open their résumé. It combs their
       GitHub, cross-references every skill and project they've claimed, then
       surfaces a LARP Score and a detailed evidence report you can act on.
-      <span className="block mt-4 text-slate-500 italic text-base">
+      <span className="block mt-4 text-slate-500 italic text-base" style={{ fontFamily: "'Edu NSW ACT Cursive', cursive" }}>
         The antidote to inflated profiles and AI-generated résumés.
       </span>
     </p>
   );
 
   return (
-    <div className="h-screen overflow-hidden bg-slate-900 text-white font-sans flex flex-col">
+    <div className="h-screen overflow-hidden bg-slate-900 text-white flex flex-col" style={{ fontFamily: "'Rationale', sans-serif" }}>
       <svg className="absolute w-0 h-0" aria-hidden="true">
         <defs>
           <filter id="gooey-threshold">
@@ -155,8 +154,9 @@ export default function Landing() {
 
       {/* Nav */}
       <nav className="relative z-30 flex items-center justify-between px-8 py-5 border-b border-slate-800/60 flex-shrink-0">
-        <span className="text-lg font-bold tracking-tight text-white">
-          LARP<span className="text-sky-400">bot</span>
+        <span className="text-lg font-bold tracking-tight" style={{ fontFamily: "'Orbitron', sans-serif" }}>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-violet-400">LARP</span>
+          <span className="text-white">bot</span>
         </span>
         <div className="flex items-center gap-4">
           <button
@@ -165,9 +165,12 @@ export default function Landing() {
           >
             How it works
           </button>
-          <button className="text-sm bg-white text-slate-900 font-semibold px-4 py-1.5 rounded-md hover:bg-slate-100 transition-colors">
+          <Link
+            to="/dashboard"
+            className="text-sm bg-white text-slate-900 font-semibold px-4 py-1.5 rounded-md hover:bg-slate-100 transition-colors"
+          >
             Sign in
-          </button>
+          </Link>
         </div>
       </nav>
 

@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Verdict File — stananan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Cursive:wght@400..700&family=Figtree:ital,wght@0,300..900;1,300..900&family=Inconsolata:wght@200..900&family=Rationale&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1814;
+    --surface: #221f1a;
+    --surface-raised: #2a2620;
+    --text-primary: #f2ede4;
+    --text-secondary: #a89f92;
+    --accent-red: #c0392b;
+    --accent-amber: #d4820a;
+    --accent-green: #2d7a4f;
+    --border: rgba(242, 237, 228, 0.08);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text-primary);
+    font-family: 'Figtree', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* Grain texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E");
+    background-size: 256px 256px;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 60px 32px 80px;
+  }
+
+  /* ─── HEADER ─────────────────────────────────────────────── */
+
+  .header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 32px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 2px;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+    object-fit: cover;
+    filter: grayscale(20%);
+  }
+
+  .candidate-meta { min-width: 0; }
+
+  .candidate-handle {
+    font-family: 'Figtree', sans-serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1;
+    margin-bottom: 6px;
+    word-break: break-all;
+  }
+
+  .candidate-url {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .candidate-url:hover { color: var(--text-primary); border-color: var(--text-secondary); }
+
+  /* LARP Score circle */
+  .score-circle {
+    flex-shrink: 0;
+    width: 110px;
+    height: 110px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .score-ring {
+    position: absolute;
+    inset: 0;
+  }
+
+  .score-number {
+    font-family: 'Figtree', sans-serif;
+    font-size: 2.6rem;
+    font-weight: 700;
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+  }
+
+  .score-label {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-secondary);
+    position: relative;
+    z-index: 1;
+    margin-top: 2px;
+  }
+
+  .verdict-line {
+    font-family: 'Edu NSW ACT Cursive', cursive;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 8px;
+    padding-left: 4px;
+    border-left: 2px solid var(--border);
+    padding-left: 14px;
+  }
+
+  .analyzed-at {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    text-align: right;
+    margin-bottom: 40px;
+    opacity: 0.7;
+  }
+
+  /* ─── SUBSCORES ───────────────────────────────────────────── */
+
+  .section-label {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-secondary);
+    margin-bottom: 14px;
+    opacity: 0.7;
+  }
+
+  .subscores {
+    margin-bottom: 40px;
+  }
+
+  .subscore-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 10px;
+  }
+
+  .subscore-label {
+    font-family: 'Figtree', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    width: 140px;
+    flex-shrink: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .subscore-track {
+    flex: 1;
+    display: flex;
+    gap: 3px;
+    align-items: center;
+  }
+
+  .subscore-tick {
+    flex: 1;
+    height: 10px;
+    background: rgba(242, 237, 228, 0.06);
+    border-radius: 1px;
+    transition: background 0.3s;
+  }
+
+  .subscore-tick.filled-red { background: var(--accent-red); }
+  .subscore-tick.filled-amber { background: var(--accent-amber); }
+  .subscore-tick.filled-green { background: var(--accent-green); }
+
+  .subscore-value {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.8rem;
+    font-weight: 400;
+    width: 28px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0 0 40px;
+  }
+
+  /* ─── CLAIM CARDS ─────────────────────────────────────────── */
+
+  .claims-section { margin-bottom: 40px; }
+
+  .claim-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    margin-bottom: 20px;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.4);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  /* Paper texture overlay */
+  .claim-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)'/%3E%3C/svg%3E");
+  }
+
+  .claim-card > * { position: relative; z-index: 1; }
+
+  .claim-header {
+    padding: 20px 22px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .claim-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+
+  .claim-text {
+    font-family: 'Edu NSW ACT Cursive', cursive;
+    font-style: italic;
+    font-size: 1.08rem;
+    color: var(--text-primary);
+    flex: 1;
+    min-width: 0;
+    line-height: 1.45;
+  }
+
+  .claim-badges {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .verdict-stamp {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.62rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 3px 8px;
+    border-radius: 2px;
+    border: 1.5px solid currentColor;
+    display: inline-block;
+  }
+
+  .verdict-stamp.contradicted { color: var(--accent-red); border-color: var(--accent-red); }
+  .verdict-stamp.unverified { color: var(--accent-amber); border-color: var(--accent-amber); }
+  .verdict-stamp.supported { color: var(--accent-green); border-color: var(--accent-green); }
+
+  .confidence-pill {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.62rem;
+    color: var(--text-secondary);
+    background: rgba(242, 237, 228, 0.06);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 2px 7px;
+  }
+
+  .claim-summary {
+    font-size: 0.88rem;
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+
+  .claim-body {
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .claim-evidence-label {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+    opacity: 0.7;
+  }
+
+  .claim-evidence {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+
+  .receipts-section {
+    padding: 14px 22px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .receipts-label {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    opacity: 0.7;
+  }
+
+  .receipts-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .receipt-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 4px 9px;
+    text-decoration: none;
+    box-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+    transition: transform 0.12s, box-shadow 0.12s, color 0.12s;
+  }
+
+  .receipt-chip:hover {
+    transform: translateY(-2px);
+    box-shadow: 2px 3px 0 rgba(0,0,0,0.4);
+    color: var(--text-primary);
+  }
+
+  .receipt-chip strong {
+    font-weight: 400;
+    color: var(--text-primary);
+  }
+
+  .receipt-chip .receipt-detail {
+    color: var(--text-secondary);
+    font-size: 0.65rem;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Pull-tab */
+  .pull-tab {
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    padding: 12px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    transition: background 0.15s;
+  }
+
+  .pull-tab:hover { background: rgba(242, 237, 228, 0.03); }
+
+  .pull-tab-label {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-secondary);
+  }
+
+  .pull-tab-arrow {
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    transition: transform 0.25s;
+  }
+
+  .pull-tab-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease;
+  }
+
+  .pull-tab-content.open { max-height: 200px; }
+
+  .pull-tab-inner {
+    padding: 0 22px 16px;
+    font-family: 'Figtree', sans-serif;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    line-height: 1.65;
+    border-top: 1px dashed var(--border);
+    padding-top: 14px;
+  }
+
+  /* ─── REDEMPTION ──────────────────────────────────────────── */
+
+  .redemption-card {
+    background: #2e2a22;
+    border: 1px solid rgba(212, 130, 10, 0.2);
+    border-radius: 3px;
+    padding: 24px 26px;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.35);
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  .redemption-label {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent-amber);
+    margin-bottom: 12px;
+    opacity: 0.85;
+  }
+
+  .redemption-text {
+    font-family: 'Edu NSW ACT Cursive', cursive;
+    font-style: italic;
+    font-size: 1.08rem;
+    color: var(--text-primary);
+    line-height: 1.65;
+  }
+
+  /* ─── FOOTER ──────────────────────────────────────────────── */
+
+  .footer {
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-repos {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .footer-repos-label {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    opacity: 0.7;
+  }
+
+  .repo-chip {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 2px 8px;
+  }
+
+  .footer-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .footer-ts {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    opacity: 0.5;
+  }
+
+  .footer-credit {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    opacity: 0.35;
+    letter-spacing: 0.5px;
+  }
+
+  /* ─── RESPONSIVE ──────────────────────────────────────────── */
+
+  @media (max-width: 600px) {
+    .page { padding: 32px 16px 60px; }
+    .header { gap: 20px; }
+    .header-left { gap: 14px; }
+    .candidate-handle { font-size: 1.75rem; }
+    .avatar { width: 54px; height: 54px; }
+    .score-circle { width: 86px; height: 86px; }
+    .score-number { font-size: 2rem; }
+    .subscore-label { width: 110px; font-size: 0.7rem; }
+    .claim-top { flex-direction: column; gap: 10px; }
+    .pull-tab-inner { font-size: 0.82rem; }
+  }
+
+  @media (max-width: 375px) {
+    .subscore-label { width: 90px; font-size: 0.65rem; }
+    .candidate-handle { font-size: 1.5rem; }
+  }
+
+  /* ─── FUNNIEST COMMITS ───────────────────────────────────── */
+
+  .commits-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px dashed var(--border);
+  }
+
+  .commits-eyebrow {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    opacity: 0.7;
+    flex-shrink: 0;
+  }
+
+  .commits-morph-wrap {
+    position: relative;
+    flex: 1;
+    height: 1.4em;
+    filter: url(#threshold);
+    overflow: hidden;
+  }
+
+  .commits-morph-a,
+  .commits-morph-b {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.82rem;
+    color: var(--text-primary);
+    white-space: nowrap;
+    opacity: 0;
+  }
+
+  /* Stamp animation */
+  @keyframes stamp-in {
+    0% { transform: scale(1.3) rotate(-3deg); opacity: 0; }
+    60% { transform: scale(0.97) rotate(0.5deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+
+  .verdict-stamp { animation: stamp-in 0.35s cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── HEADER ── -->
+  <header class="header">
+    <div class="header-left">
+      <img class="avatar" src="https://github.com/stananan.png" alt="stananan" onerror="this.style.display='none'">
+      <div class="candidate-meta">
+        <div class="candidate-handle">stananan</div>
+        <a class="candidate-url" href="https://github.com/stananan" target="_blank" rel="noopener">github.com/stananan</a>
+      </div>
+    </div>
+    <div class="score-circle" id="scoreCircle">
+      <svg class="score-ring" viewBox="0 0 110 110">
+        <circle cx="55" cy="55" r="48" fill="none" stroke="rgba(242,237,228,0.06)" stroke-width="6"/>
+        <circle id="scoreArc" cx="55" cy="55" r="48" fill="none" stroke-width="6"
+          stroke-linecap="round"
+          stroke-dasharray="301.59"
+          stroke-dashoffset="301.59"
+          transform="rotate(-90 55 55)"
+          style="transition: stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1), stroke 0.3s"/>
+      </svg>
+      <span class="score-number" id="scoreNumber">0</span>
+      <span class="score-label">LARP Score</span>
+    </div>
+  </header>
+
+  <p class="verdict-line">"Aggressively inflated. The GitHub tells a different story than the pitch."</p>
+  <p class="analyzed-at">Analyzed: 2026-05-09 · 14:32 UTC</p>
+
+  <!-- ── SUBSCORES ── -->
+  <div class="section-label">Analysis Breakdown</div>
+  <div class="subscores" id="subscores"></div>
+  <hr class="section-divider">
+
+  <!-- ── CLAIMS ── -->
+  <div class="section-label">Claims Under Review</div>
+  <div class="claims-section" id="claims"></div>
+
+  <!-- SVG filter for morph gooey threshold effect -->
+  <svg style="position:absolute;width:0;height:0" aria-hidden="true">
+    <defs>
+      <filter id="threshold">
+        <feColorMatrix in="SourceGraphic" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 255 -140"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- ── REDEMPTION ── -->
+  <div class="redemption-card" id="redemption">
+    <div class="redemption-label">Analyst Note</div>
+    <p class="redemption-text">The React Dashboard has genuinely thoughtful component composition for someone 7 months in. The custom hook pattern in useDataFetcher.ts shows real understanding, not just tutorial copying. There's a developer here — just not the one described.</p>
+    <div class="commits-row">
+      <span class="commits-eyebrow">💀 actual commits:</span>
+      <div class="commits-morph-wrap">
+        <span class="commits-morph-a" id="morphA"></span>
+        <span class="commits-morph-b" id="morphB"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="footer-repos">
+      <span class="footer-repos-label">Analyzed repos:</span>
+      <span class="repo-chip">react-dashboard</span>
+      <span class="repo-chip">ml-pipeline-demo</span>
+      <span class="repo-chip">distributed-auth-service</span>
+    </div>
+    <div class="footer-meta">
+      <span class="footer-ts">2026-05-09T14:32:11Z</span>
+      <span class="footer-credit">Generated by LARP Detector</span>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+const data = {
+  overallLarpScore: 84,
+  subscores: {
+    skillInflation: 91,
+    projectSubstance: 78,
+    roleAuthenticity: 88,
+    codeDepth: 72,
+  },
+  claims: [
+    {
+      claim: "3 years of React experience",
+      verdict: "CONTRADICTED",
+      confidence: 0.91,
+      summary: "React activity spans 7 months, not 3 years. Earliest React commit dates to April 2024.",
+      evidence: "Oldest React repo created April 2024. No React code before that. Total React LOC across all repos: 2,847 — one semester of weekend projects, not three years.",
+      receipts: [
+        { type: "repo", label: "Oldest React repo", detail: "react-dashboard created April 14, 2024 — 7 months ago, not 3 years", url: "https://github.com/stananan/react-dashboard" },
+        { type: "commit", label: "First React commit", detail: '"init react app" — April 14, 2024', url: "https://github.com/stananan/react-dashboard/commit/a1b2c3d" },
+        { type: "pattern", label: "Total React LOC", detail: "2,847 lines across 3 repos. Consistent with ~6 months of part-time work.", url: "https://github.com/stananan" },
+      ],
+      whatToAskNext: "Ask them to walk through a React performance issue they debugged — specifically why they chose their state management approach and what they'd do differently now.",
+    },
+    {
+      claim: "Built a production ML pipeline",
+      verdict: "UNVERIFIED",
+      confidence: 0.87,
+      summary: "Found an ML-adjacent repo but no evidence of production deployment. It's a Jupyter notebook with hardcoded sample data.",
+      evidence: "ml-pipeline-demo contains 1 notebook, 340 lines, sample CSV hardcoded as input, no deployment config, no CI, no requirements.txt pinned versions. README claims 'serves predictions in real-time' — no server code found.",
+      receipts: [
+        { type: "file", label: "README claim vs reality", detail: "README: 'production ML pipeline serving real-time predictions.' Repo: 1 Jupyter notebook, 1 CSV file, no API.", url: "https://github.com/stananan/ml-pipeline-demo/blob/main/README.md" },
+        { type: "file", label: "No deployment config", detail: "No Dockerfile, no CI/CD, no requirements.txt. Nothing suggests this ever ran outside a laptop.", url: "https://github.com/stananan/ml-pipeline-demo" },
+        { type: "commit", label: "Suspiciously linear history", detail: "14 commits, all in a single 6-hour window on Nov 3. No iteration, no debugging, no reverts.", url: "https://github.com/stananan/ml-pipeline-demo/commits/main" },
+      ],
+      whatToAskNext: "Ask them to describe the infrastructure — where it ran, how predictions were served, what the latency was, how they monitored it. If it was production, they'll have instant answers.",
+    },
+    {
+      claim: "Led backend architecture for a real-time system",
+      verdict: "CONTRADICTED",
+      confidence: 0.83,
+      summary: "Found the repo. Candidate authored 9% of commits. All contributions were in a single 3-day window after the core architecture was already in place.",
+      evidence: "distributed-auth-service: 247 commits total. Candidate: 22 commits. Core architecture — WebSocket layer, Redis pub/sub, connection pooling — committed by @nico-dev across weeks 1–4. Candidate joined in week 5, contributed UI glue code and README.",
+      receipts: [
+        { type: "pattern", label: "Commit attribution", detail: "22 of 247 commits (9%). Architecture commits: 0. Contributions: README, minor config changes, one bugfix.", url: "https://github.com/stananan/distributed-auth-service/graphs/contributors" },
+        { type: "commit", label: "Architecture already done", detail: "WebSocket layer by @nico-dev on Oct 1. Candidate's first commit: Oct 29 — 'update readme and fix typo'", url: "https://github.com/stananan/distributed-auth-service/commit/f4e5d6c" },
+        { type: "file", label: "Core architecture files", detail: "websocket.ts, redis-pubsub.ts, connection-pool.ts — all authored by @nico-dev, zero commits from candidate.", url: "https://github.com/stananan/distributed-auth-service/blob/main/src/websocket.ts" },
+      ],
+      whatToAskNext: "Ask them to draw the architecture from memory — specifically the connection pooling strategy and why they chose Redis pub/sub over alternatives. Ask what they'd change if rebuilding it today.",
+    },
+  ],
+};
+
+function scoreColor(n) {
+  if (n > 80) return 'var(--accent-red)';
+  if (n >= 50) return 'var(--accent-amber)';
+  return 'var(--accent-green)';
+}
+
+function verdictClass(v) {
+  return { CONTRADICTED: 'contradicted', UNVERIFIED: 'unverified', SUPPORTED: 'supported' }[v] || '';
+}
+
+function receiptIcon(type) {
+  return { file: '📁', commit: '🔗', repo: '🔗', pattern: '📊' }[type] || '📎';
+}
+
+function subscoreLabel(key) {
+  return { skillInflation: 'Skill Inflation', projectSubstance: 'Project Substance', roleAuthenticity: 'Role Authenticity', codeDepth: 'Code Depth' }[key] || key;
+}
+
+// ── Animate score circle
+function animateScore(target) {
+  const arc = document.getElementById('scoreArc');
+  const numEl = document.getElementById('scoreNumber');
+  const circumference = 301.59;
+  const color = scoreColor(target);
+
+  arc.style.stroke = color;
+  numEl.style.color = color;
+
+  const start = performance.now();
+  const duration = 1400;
+
+  function ease(t) { return 1 - Math.pow(1 - t, 3); }
+
+  function step(now) {
+    const t = Math.min((now - start) / duration, 1);
+    const e = ease(t);
+    const val = Math.round(e * target);
+    numEl.textContent = val;
+    arc.style.strokeDashoffset = circumference - (circumference * (val / 100));
+    if (t < 1) requestAnimationFrame(step);
+  }
+
+  setTimeout(() => requestAnimationFrame(step), 200);
+}
+
+// ── Render subscores
+function renderSubscores() {
+  const container = document.getElementById('subscores');
+  Object.entries(data.subscores).forEach(([key, val]) => {
+    const color = scoreColor(val);
+    const filled = Math.round(val / 10);
+    const colorClass = val > 80 ? 'filled-red' : val >= 50 ? 'filled-amber' : 'filled-green';
+
+    const ticks = Array.from({ length: 10 }, (_, i) =>
+      `<div class="subscore-tick${i < filled ? ' ' + colorClass : ''}"></div>`
+    ).join('');
+
+    const row = document.createElement('div');
+    row.className = 'subscore-row';
+    row.innerHTML = `
+      <div class="subscore-label">${subscoreLabel(key)}</div>
+      <div class="subscore-track">${ticks}</div>
+      <div class="subscore-value" style="color:${color}">${val}</div>
+    `;
+    container.appendChild(row);
+  });
+}
+
+// ── Render claims
+function renderClaims() {
+  const container = document.getElementById('claims');
+  data.claims.forEach((c, i) => {
+    const pct = Math.round(c.confidence * 100);
+    const vClass = verdictClass(c.verdict);
+    const animDelay = i * 60;
+
+    const receiptsHtml = c.receipts.map(r => `
+      <a class="receipt-chip" href="${r.url}" target="_blank" rel="noopener">
+        <span>${receiptIcon(r.type)}</span>
+        <strong>${r.label}</strong>
+        <span class="receipt-detail">${r.detail}</span>
+      </a>
+    `).join('');
+
+    const card = document.createElement('div');
+    card.className = 'claim-card';
+    card.style.animationDelay = `${animDelay}ms`;
+    card.innerHTML = `
+      <div class="claim-header">
+        <div class="claim-top">
+          <div class="claim-text">"${c.claim}"</div>
+          <div class="claim-badges">
+            <span class="verdict-stamp ${vClass}" style="animation-delay:${animDelay + 100}ms">${c.verdict}</span>
+            <span class="confidence-pill">${pct}%</span>
+          </div>
+        </div>
+        <p class="claim-summary">${c.summary}</p>
+      </div>
+      <div class="claim-body">
+        <div class="claim-evidence-label">Evidence</div>
+        <p class="claim-evidence">${c.evidence}</p>
+      </div>
+      <div class="receipts-section">
+        <div class="receipts-label">Receipts (${c.receipts.length})</div>
+        <div class="receipts-list">${receiptsHtml}</div>
+      </div>
+      <button class="pull-tab" onclick="toggleTab(this)" aria-expanded="false">
+        <span class="pull-tab-label">▸ What to ask next</span>
+        <span class="pull-tab-arrow">▾</span>
+      </button>
+      <div class="pull-tab-content">
+        <div class="pull-tab-inner">${c.whatToAskNext}</div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function toggleTab(btn) {
+  const content = btn.nextElementSibling;
+  const arrow = btn.querySelector('.pull-tab-arrow');
+  const label = btn.querySelector('.pull-tab-label');
+  const isOpen = content.classList.toggle('open');
+  btn.setAttribute('aria-expanded', isOpen);
+  arrow.style.transform = isOpen ? 'rotate(180deg)' : '';
+  label.textContent = isOpen ? '▾ What to ask next' : '▸ What to ask next';
+}
+
+// ── Stagger-in animation via IntersectionObserver
+function setupAnimations() {
+  const animEls = [...document.querySelectorAll('.claim-card'), document.getElementById('redemption')];
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const delay = parseInt(el.style.animationDelay || '0');
+        setTimeout(() => {
+          el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+        }, delay);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.05 });
+
+  animEls.forEach(el => observer.observe(el));
+}
+
+// ── Morph commits
+const weirdestCommits = [
+  '"fix fix fix fix fix"',
+  '"idk why this works but it does"',
+  '"final"',
+  '"final FINAL"',
+  '"ok actually final"',
+  '"update readme and fix typo"',
+  '"asdfghjkl"',
+  '"please work"',
+];
+
+function startMorph() {
+  const elA = document.getElementById('morphA');
+  const elB = document.getElementById('morphB');
+  const texts = weirdestCommits;
+  const MORPH_TIME = 1;
+  const COOLDOWN_TIME = 0.5;
+  const DISPLAY_TIME = 2;
+  let index = texts.length - 1;
+  let morph = 0;
+  let cooldown = COOLDOWN_TIME;
+  let lastTime = performance.now();
+
+  elA.textContent = texts[index % texts.length];
+  elB.textContent = texts[(index + 1) % texts.length];
+
+  function setMorph(fraction) {
+    elB.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
+    elB.style.opacity = `${Math.pow(fraction, 0.4)}`;
+    const inv = 1 - fraction;
+    elA.style.filter = `blur(${Math.min(8 / inv - 8, 100)}px)`;
+    elA.style.opacity = `${Math.pow(inv, 0.4)}`;
+  }
+
+  function doCooldown() {
+    morph = 0;
+    elB.style.filter = '';
+    elB.style.opacity = '1';
+    elA.style.filter = '';
+    elA.style.opacity = '0';
+  }
+
+  function tick(now) {
+    const dt = (now - lastTime) / 1000;
+    lastTime = now;
+    const wasCooling = cooldown > 0;
+    cooldown -= dt;
+    if (cooldown <= 0) {
+      if (wasCooling) {
+        index = (index + 1) % texts.length;
+        elA.textContent = texts[index % texts.length];
+        elB.textContent = texts[(index + 1) % texts.length];
+      }
+      morph -= cooldown;
+      cooldown = 0;
+      let fraction = morph / MORPH_TIME;
+      if (fraction > 1) { cooldown = DISPLAY_TIME; fraction = 1; }
+      setMorph(fraction);
+    } else {
+      doCooldown();
+    }
+    requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame(tick);
+}
+
+// ── Init
+renderSubscores();
+renderClaims();
+animateScore(data.overallLarpScore);
+setupAnimations();
+startMorph();
+</script>
+</body>
+</html>

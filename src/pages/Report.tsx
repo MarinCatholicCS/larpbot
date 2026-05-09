@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { Component as EtherealShadow } from "@/components/ui/etheral-shadow";
 
 const data = {
   candidate: "stananan",
@@ -102,12 +103,6 @@ function CountUpScore({ target }: { target: number }) {
     const duration = 1800;
     const start = performance.now();
     function easeOut(t: number) { return 1 - Math.pow(1 - t, 3); }
-    function lerpColor(t: number) {
-      const r = t < 0.5 ? Math.round(74 + (250 - 74) * (t / 0.5)) : Math.round(250 + (239 - 250) * ((t - 0.5) / 0.5));
-      const g = t < 0.5 ? Math.round(222 + (204 - 222) * (t / 0.5)) : Math.round(204 + (68 - 204) * ((t - 0.5) / 0.5));
-      const b = t < 0.5 ? Math.round(128 + (21 - 128) * (t / 0.5)) : Math.round(21 + (68 - 21) * ((t - 0.5) / 0.5));
-      return `rgb(${r},${g},${b})`;
-    }
     let raf: number;
     function step(ts: number) {
       const progress = Math.min((ts - start) / duration, 1);
@@ -212,7 +207,7 @@ function GooeyCommits({ commits }: { commits: typeof data.weirdestCommits }) {
 type Verdict = "CONTRADICTED" | "UNVERIFIED" | "SUPPORTED";
 type TabId = "evidence" | "receipts" | "asknext";
 
-function ClaimCard({ claim, index }: { claim: typeof data.claims[0]; index: number }) {
+function ClaimCard({ claim }: { claim: typeof data.claims[0] }) {
   const [open, setOpen] = useState(false);
   const [tab, setTab] = useState<TabId>("evidence");
   const pct = Math.round(claim.confidence * 100);
@@ -308,8 +303,16 @@ export default function Report() {
   });
 
   return (
-    <div className="min-h-screen bg-[#0d0d0d] text-[#e0e0e0] p-8 font-sans">
-      <div className="max-w-[860px] mx-auto">
+    <div className="min-h-screen bg-[#0d0d0d] text-[#e0e0e0] p-8 font-sans relative">
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <EtherealShadow
+          color="rgba(30, 80, 140, 1)"
+          animation={{ scale: 100, speed: 90 }}
+          noise={{ opacity: 1, scale: 1.2 }}
+          sizing="fill"
+        />
+      </div>
+      <div className="max-w-[860px] mx-auto relative z-10">
         <div className="mb-4">
           <Link to="/" className="text-xs text-slate-500 hover:text-sky-400 transition-colors">
             ← Back to LARPbot
@@ -370,7 +373,7 @@ export default function Report() {
         <div className="text-[0.7rem] uppercase tracking-[1px] text-[#666] mb-4">Claims Analysis</div>
         <div className="flex flex-col gap-5 mb-8">
           {data.claims.map((c, i) => (
-            <ClaimCard key={i} claim={c} index={i} />
+            <ClaimCard key={i} claim={c} />
           ))}
         </div>
 
