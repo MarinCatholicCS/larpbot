@@ -879,6 +879,62 @@ section {
 }
 .exec-links span:hover { border-color: var(--neon-pink); color: var(--neon-pink); }
 
+.exec-card--open {
+  border-color: rgba(255, 0, 110, 0.3);
+  cursor: pointer;
+  animation: openCardPulse 2.5s ease-in-out infinite;
+}
+@keyframes openCardPulse {
+  0%, 100% { border-color: rgba(255,0,110,0.25); box-shadow: 0 0 0 rgba(255,0,110,0); }
+  50% { border-color: rgba(255,0,110,0.6); box-shadow: 0 0 24px rgba(255,0,110,0.12); }
+}
+.exec-card--open:hover { border-color: var(--neon-pink); transform: translateY(-6px); }
+
+.exec-vacant-img {
+  width: 100%;
+  aspect-ratio: 1;
+  background: repeating-linear-gradient(
+    45deg,
+    #0e0e0e,
+    #0e0e0e 10px,
+    #111 10px,
+    #111 20px
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.exec-vacant-silhouette {
+  font-family: 'Bangers', cursive;
+  font-size: 6rem;
+  color: rgba(255,255,255,0.04);
+  line-height: 1;
+  user-select: none;
+}
+.exec-vacant-scan {
+  position: absolute;
+  top: -100%; left: 0; right: 0;
+  height: 100%;
+  background: linear-gradient(transparent 40%, rgba(255,0,110,0.08) 50%, transparent 60%);
+  animation: scanMove 2s linear infinite;
+}
+.exec-vacant-badge {
+  position: absolute;
+  top: 14px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--neon-pink);
+  color: #000;
+  font-family: 'Bangers', cursive;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  padding: 4px 12px;
+  white-space: nowrap;
+  animation: badgePulse 1.2s ease-in-out infinite alternate;
+  z-index: 2;
+}
+
 /* ── PROFESSIONAL FOOTER ── */
 footer {
   background: #080808;
@@ -1527,6 +1583,21 @@ footer {
     <!-- JOB LISTINGS -->
     <div style="text-align:left; display:flex; flex-direction:column; gap:3px;">
 
+      <!-- CTO HERO LISTING -->
+      <div style="border:2px solid var(--neon-pink); padding:28px 24px; margin-bottom:4px; position:relative; overflow:hidden; animation:openCardPulse 2.5s ease-in-out infinite; cursor:pointer;" onclick="applyNow(this)">
+        <div style="position:absolute; top:0; right:0; background:var(--neon-pink); color:#000; font-family:'Bangers',cursive; font-size:0.75rem; letter-spacing:2px; padding:5px 16px;">🚨 CRITICAL HIRE</div>
+        <div style="position:absolute; inset:0; background:radial-gradient(ellipse at top right, rgba(255,0,110,0.07), transparent 60%); pointer-events:none;"></div>
+        <div class="job-title" style="font-size:1.4rem; color:var(--neon-pink); letter-spacing:1px; margin-bottom:8px;">Chief Technology Officer</div>
+        <div class="job-meta">
+          <span class="job-tag" style="border-color:var(--neon-pink); color:var(--neon-pink);">Remote / Jakarta HQ</span>
+          <span class="job-tag" style="border-color:var(--neon-pink); color:var(--neon-pink);">C-Suite</span>
+          <span class="job-tag" style="border-color:var(--neon-pink); color:var(--neon-pink);">$600K–$900K + 2% equity</span>
+          <span class="job-tag" style="border-color:var(--neon-yellow); color:var(--neon-yellow);">Seat empty since Q1 2025</span>
+        </div>
+        <div class="job-desc" style="display:block; color:#aaa; font-size:0.88rem;">This is the most important role at TungCorp. Our CTO seat has been vacant since Q1 2025 and we are scaling TungStack™ to 1 billion daily percussive events without a technical leader. You will own the entire engineering organisation (140 engineers across 6 teams), the AI roadmap for our Large Drum Model, and the global infrastructure that ensures every TUNG arrives within 3ms. We have never needed anyone more than we need you right now. The drum is waiting.</div>
+        <button style="margin-top:16px; background:var(--neon-pink); border:none; color:#000; font-family:'Bangers',cursive; font-size:1.1rem; letter-spacing:3px; padding:12px 30px; cursor:pointer; animation:btnBounce 1.5s ease-in-out infinite;" onclick="event.stopPropagation(); alert('🥁 CTO APPLICATION RECEIVED\n\nThis is our most important hire.\nWe will tung you within 2 hours.\n\nTUNG TUNG TUNG SAHUR.')">APPLY FOR CTO →</button>
+      </div>
+
       <!-- Engineering -->
       <div style="background:rgba(255,0,110,0.08); border-left:3px solid var(--neon-pink); padding:4px 20px; margin-top:30px;">
         <span style="font-family:'Bangers',cursive; font-size:1.2rem; letter-spacing:3px; color:var(--neon-pink);">ENGINEERING & INFRASTRUCTURE</span>
@@ -1648,17 +1719,19 @@ footer {
       </div>
     </div>
 
-    <div class="exec-card">
+    <div class="exec-card exec-card--open" onclick="document.getElementById('careers').scrollIntoView({behavior:'smooth'})">
       <div class="exec-img-wrap">
-        <img src="tung/tung2.png" alt="CTO">
-        <div class="exec-suit"></div>
-        <div class="exec-tie" style="background:#1a3a6b;"></div>
+        <div class="exec-vacant-img">
+          <div class="exec-vacant-silhouette">?</div>
+          <div class="exec-vacant-scan"></div>
+        </div>
+        <div class="exec-vacant-badge">POSITION OPEN</div>
       </div>
       <div class="exec-info">
-        <div class="exec-name">Tung T. Sahur II</div>
-        <div class="exec-title-tag">Chief Technology Officer</div>
-        <div class="exec-bio">Former VP Engineering at Stripe, Google, and an undisclosed drum-related startup. Built TungStack™ v1 in a single 72-hour Sahur session. Stanford CS, PhD Percussive Systems.</div>
-        <div class="exec-links"><span>in</span><span>𝕏</span></div>
+        <div class="exec-name" style="color:#555; font-style:italic;">[ Unfilled ]</div>
+        <div class="exec-title-tag" style="color:var(--neon-yellow); animation:badgePulse 1.2s ease-in-out infinite alternate;">Chief Technology Officer</div>
+        <div class="exec-bio" style="color:#444;">Our CTO seat has been empty since Q1 2025. TungStack™ is scaling to 1B daily tungs and we are doing it without a technical co-leader. This is not ideal. We need someone extraordinary. You will own the entire engineering org, the percussive infrastructure roadmap, and the Large Drum Model. This is the most important hire we have ever made.</div>
+        <a href="#careers" onclick="event.stopPropagation()" style="display:inline-block; margin-top:4px; background:var(--neon-pink); color:#000; font-family:'Bangers',cursive; font-size:0.9rem; letter-spacing:2px; padding:8px 18px; text-decoration:none; animation:btnBounce 1.5s ease-in-out infinite;">→ APPLY NOW</a>
       </div>
     </div>
 
