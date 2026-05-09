@@ -22,7 +22,7 @@ body {
   color: #fff;
   font-family: 'Rajdhani', sans-serif;
   overflow-x: hidden;
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Ctext y='28' font-size='28'%3E🥁%3C/text%3E%3C/svg%3E"), auto;
+  cursor: default;
 }
 
 /* ── SCROLLING STAR BACKGROUND ── */
@@ -43,7 +43,7 @@ body::before {
     radial-gradient(2px 2px at 65% 30%, rgba(58,134,255,0.8), transparent),
     #000820;
   z-index: -2;
-  animation: starScroll 80s linear infinite;
+  
 }
 
 @keyframes starScroll {
@@ -90,7 +90,7 @@ body::before {
   font-size: 2rem;
   pointer-events: none;
   z-index: 1;
-  animation: floatUp linear infinite;
+  
   opacity: 0;
 }
 @keyframes floatUp {
@@ -119,7 +119,7 @@ body::before {
   border-radius: 0;
   margin-bottom: 20px;
   display: inline-block;
-  animation: badgePulse 1s ease-in-out infinite alternate;
+  
   letter-spacing: 2px;
 }
 @keyframes badgePulse {
@@ -157,7 +157,7 @@ body::before {
   max-width: 700px;
   margin: 24px auto 10px;
   line-height: 1.4;
-  animation: subtitleFlicker 4s ease infinite;
+  
 }
 @keyframes subtitleFlicker {
   0%, 95%, 100% { opacity: 1; }
@@ -183,7 +183,7 @@ body::before {
   border: 2px solid var(--neon-pink);
   padding: 12px 20px;
   text-align: center;
-  animation: statGlow 2s ease-in-out infinite alternate;
+  
   min-width: 120px;
 }
 .stat-box:nth-child(2) { border-color: var(--neon-blue); animation-delay: 0.3s; }
@@ -219,7 +219,7 @@ body::before {
   border: none;
   cursor: pointer;
   letter-spacing: 1px;
-  animation: btnBounce 2s ease-in-out infinite;
+  
   text-decoration: none;
   display: inline-block;
 }
@@ -272,7 +272,7 @@ section {
   height: 3px;
   background: linear-gradient(90deg, transparent, var(--neon-pink), var(--neon-blue), var(--neon-green), transparent);
   margin: 0;
-  animation: dividerFlow 3s linear infinite;
+  
   background-size: 200%;
 }
 @keyframes dividerFlow {
@@ -332,7 +332,7 @@ section {
   right: 0;
   height: 100%;
   background: linear-gradient(transparent 40%, rgba(0,255,200,0.15) 50%, transparent 60%);
-  animation: scanMove 2s linear infinite;
+  
   pointer-events: none;
 }
 @keyframes scanMove {
@@ -383,7 +383,7 @@ section {
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 3px;
-  animation: cardTopGlow 2s ease-in-out infinite alternate;
+  
 }
 .lore-card:nth-child(1)::before { background: var(--neon-pink); }
 .lore-card:nth-child(2)::before { background: var(--neon-blue); }
@@ -453,7 +453,7 @@ section {
   top: 0; bottom: 0;
   width: 2px;
   background: linear-gradient(180deg, var(--neon-pink), var(--neon-blue), var(--neon-green), var(--neon-yellow));
-  animation: timelineGlow 3s ease-in-out infinite alternate;
+  
 }
 @keyframes timelineGlow {
   from { filter: brightness(1); }
@@ -468,7 +468,7 @@ section {
   height: 14px;
   background: var(--neon-pink);
   border: 2px solid #000;
-  animation: dotPulse 1.5s ease-in-out infinite;
+  
 }
 .timeline-item:nth-child(2) .timeline-dot { background: var(--neon-blue); animation-delay: 0.3s; }
 .timeline-item:nth-child(3) .timeline-dot { background: var(--neon-green); animation-delay: 0.6s; }
@@ -539,7 +539,7 @@ section {
   font-family: 'Bangers', cursive;
   font-size: clamp(1.5rem, 4vw, 2.5rem);
   letter-spacing: 4px;
-  animation: blinkBg 0.8s step-end infinite;
+  
   position: relative;
   overflow: hidden;
 }
@@ -554,7 +554,7 @@ section {
   font-size: 1rem;
   opacity: 0.3;
   letter-spacing: 10px;
-  animation: emojiScroll 5s linear infinite;
+  
 }
 @keyframes emojiScroll {
   from { transform: translateX(0); }
@@ -674,7 +674,7 @@ section {
   background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: numGlow 2s ease-in-out infinite alternate;
+  
 }
 .counter-box:nth-child(2) .counter-num { background: linear-gradient(135deg, var(--neon-blue), var(--neon-green)); -webkit-background-clip: text; }
 .counter-box:nth-child(3) .counter-num { background: linear-gradient(135deg, var(--neon-yellow), var(--neon-orange)); -webkit-background-clip: text; }
@@ -701,7 +701,7 @@ section {
   transform: translate(-50%, -50%);
   pointer-events: none;
   white-space: nowrap;
-  animation: bgWordPulse 4s ease-in-out infinite;
+  
 }
 @keyframes bgWordPulse {
   0%, 100% { opacity: 0.5; } 50% { opacity: 1; }
@@ -712,7 +712,7 @@ section {
   letter-spacing: 4px;
   line-height: 1;
   margin-bottom: 20px;
-  animation: rainbowShift 3s linear infinite;
+  
   background: linear-gradient(90deg, var(--neon-pink), var(--neon-yellow), var(--neon-green), var(--neon-blue), var(--neon-purple), var(--neon-pink));
   background-size: 300%;
   -webkit-background-clip: text;
@@ -882,7 +882,7 @@ section {
 .exec-card--open {
   border-color: rgba(255, 0, 110, 0.3);
   cursor: pointer;
-  animation: openCardPulse 2.5s ease-in-out infinite;
+  
 }
 @keyframes openCardPulse {
   0%, 100% { border-color: rgba(255,0,110,0.25); box-shadow: 0 0 0 rgba(255,0,110,0); }
@@ -918,7 +918,7 @@ section {
   top: -100%; left: 0; right: 0;
   height: 100%;
   background: linear-gradient(transparent 40%, rgba(255,0,110,0.08) 50%, transparent 60%);
-  animation: scanMove 2s linear infinite;
+  
 }
 .exec-vacant-badge {
   position: absolute;
@@ -931,7 +931,7 @@ section {
   letter-spacing: 2px;
   padding: 4px 12px;
   white-space: nowrap;
-  animation: badgePulse 1.2s ease-in-out infinite alternate;
+  
   z-index: 2;
 }
 
@@ -1046,7 +1046,6 @@ footer {
 </head>
 <body>
 
-<canvas id="matrix"></canvas>
 
 <!-- TICKER -->
 <div class="ticker">
@@ -1066,7 +1065,7 @@ footer {
     <a href="#" style="color:#aaa; text-decoration:none; font-size:0.78rem; letter-spacing:1px; text-transform:uppercase; transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#aaa'">Enterprise</a>
     <a href="#" style="color:#aaa; text-decoration:none; font-size:0.78rem; letter-spacing:1px; text-transform:uppercase; transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#aaa'">Pricing</a>
     <a href="#" style="color:#aaa; text-decoration:none; font-size:0.78rem; letter-spacing:1px; text-transform:uppercase; transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#aaa'">Blog</a>
-    <a href="#careers" style="background:var(--neon-pink); color:#000; font-family:'Bangers',cursive; font-size:1rem; letter-spacing:2px; padding:8px 20px; text-decoration:none; animation:badgePulse 1.5s ease-in-out infinite alternate;">WE'RE HIRING</a>
+    <a href="#careers" style="background:var(--neon-pink); color:#000; font-family:'Bangers',cursive; font-size:1rem; letter-spacing:2px; padding:8px 20px; text-decoration:none; ">WE'RE HIRING</a>
   </div>
 </nav>
 
@@ -1217,6 +1216,13 @@ footer {
   </div>
 </section>
 
+<!-- ── IMAGE STRIP 1 ── -->
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr; height:340px; gap:2px; margin:0;">
+  <img src="tung/tung1.png" style="width:100%; height:100%; object-fit:cover; object-position:top; display:block;">
+  <img src="tung/tung3.jpg" style="width:100%; height:100%; object-fit:cover; object-position:top; display:block;">
+  <img src="tung/tung5.jpg" style="width:100%; height:100%; object-fit:cover; object-position:top; display:block;">
+</div>
+
 <!-- ═══════════════════════════════ MARQUEE 2 ═══════════════════════════════ -->
 <div class="marquee-band alt">
   <span class="marquee-inner">
@@ -1323,6 +1329,12 @@ footer {
   </div>
 </section>
 
+<!-- ── IMAGE STRIP 2 ── -->
+<div style="display:grid; grid-template-columns:2fr 1fr; height:420px; gap:2px; margin:0;">
+  <img src="tung/tung2.png" style="width:100%; height:100%; object-fit:cover; object-position:top; display:block;">
+  <img src="tung/tung4.jpg" style="width:100%; height:100%; object-fit:cover; object-position:top; display:block;">
+</div>
+
 <!-- ═══════════════════════════════ FEATURES ═══════════════════════════════ -->
 <section>
   <div class="section-eyebrow">✨ KEY ATTRIBUTES</div>
@@ -1409,6 +1421,15 @@ footer {
     </div>
   </div>
 </section>
+
+<!-- ── IMAGE STRIP 3 ── -->
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr 1fr; height:260px; gap:2px; margin:0;">
+  <img src="tung/tung3.jpg" style="width:100%; height:100%; object-fit:cover; object-position:top; display:block;">
+  <img src="tung/tung1.png" style="width:100%; height:100%; object-fit:cover; object-position:top; display:block;">
+  <img src="tung/tung5.jpg" style="width:100%; height:100%; object-fit:cover; object-position:top; display:block;">
+  <img src="tung/tung4.jpg" style="width:100%; height:100%; object-fit:cover; object-position:top; display:block;">
+  <img src="tung/tung2.png" style="width:100%; height:100%; object-fit:cover; object-position:top; display:block;">
+</div>
 
 <!-- ═══════════════════════════════ TESTIMONIALS ═══════════════════════════════ -->
 <section>
@@ -1554,13 +1575,13 @@ footer {
 
   <!-- Giant pulsing WE'RE HIRING background text -->
   <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; overflow:hidden;">
-    <span style="font-family:'Bangers',cursive; font-size:22vw; color:rgba(255,0,110,0.04); white-space:nowrap; animation:bgWordPulse 3s ease-in-out infinite; letter-spacing:10px;">WE'RE HIRING</span>
+    <span style="font-family:'Bangers',cursive; font-size:22vw; color:rgba(255,0,110,0.04); white-space:nowrap;  letter-spacing:10px;">WE'RE HIRING</span>
   </div>
 
   <div style="position:relative; z-index:1; max-width:1100px; margin:0 auto;">
     <div class="section-eyebrow" style="display:block; text-align:center; margin-bottom:16px;">🚨 CAREERS AT TUNGCORP™ 🚨</div>
 
-    <h2 style="font-family:'Bangers',cursive; font-size:clamp(4rem,12vw,9rem); letter-spacing:4px; line-height:0.9; margin-bottom:10px; animation:rainbowShift 3s linear infinite; background:linear-gradient(90deg,var(--neon-pink),var(--neon-yellow),var(--neon-green),var(--neon-blue),var(--neon-pink)); background-size:300%; -webkit-background-clip:text; -webkit-text-fill-color:transparent;">WE'RE<br>HIRING</h2>
+    <h2 style="font-family:'Bangers',cursive; font-size:clamp(4rem,12vw,9rem); letter-spacing:4px; line-height:0.9; margin-bottom:10px;  background:linear-gradient(90deg,var(--neon-pink),var(--neon-yellow),var(--neon-green),var(--neon-blue),var(--neon-pink)); background-size:300%; -webkit-background-clip:text; -webkit-text-fill-color:transparent;">WE'RE<br>HIRING</h2>
 
     <p style="font-family:'Bangers',cursive; font-size:clamp(1.2rem,3vw,2rem); letter-spacing:3px; color:var(--neon-yellow); margin-bottom:10px;">1 OPEN ROLE · CHIEF TECHNOLOGY OFFICER · REMOTE / JAKARTA HQ · 2% EQUITY</p>
 
@@ -1584,7 +1605,7 @@ footer {
     <div style="text-align:left; display:flex; flex-direction:column; gap:3px;">
 
       <!-- CTO HERO LISTING -->
-      <div style="border:2px solid var(--neon-pink); padding:28px 24px; margin-bottom:4px; position:relative; overflow:hidden; animation:openCardPulse 2.5s ease-in-out infinite; cursor:pointer;" onclick="applyNow(this)">
+      <div style="border:2px solid var(--neon-pink); padding:28px 24px; margin-bottom:4px; position:relative; overflow:hidden;  cursor:pointer;" onclick="applyNow(this)">
         <div style="position:absolute; top:0; right:0; background:var(--neon-pink); color:#000; font-family:'Bangers',cursive; font-size:0.75rem; letter-spacing:2px; padding:5px 16px;">🚨 CRITICAL HIRE</div>
         <div style="position:absolute; inset:0; background:radial-gradient(ellipse at top right, rgba(255,0,110,0.07), transparent 60%); pointer-events:none;"></div>
         <div class="job-title" style="font-size:1.4rem; color:var(--neon-pink); letter-spacing:1px; margin-bottom:8px;">Chief Technology Officer</div>
@@ -1595,21 +1616,21 @@ footer {
           <span class="job-tag" style="border-color:var(--neon-yellow); color:var(--neon-yellow);">Seat empty since Q1 2025</span>
         </div>
         <div class="job-desc" style="display:block; color:#aaa; font-size:0.88rem;">This is the most important role at TungCorp. Our CTO seat has been vacant since Q1 2025 and we are scaling TungStack™ to 1 billion daily percussive events without a technical leader. You will own the entire engineering organisation (140 engineers across 6 teams), the AI roadmap for our Large Drum Model, and the global infrastructure that ensures every TUNG arrives within 3ms. We have never needed anyone more than we need you right now. The drum is waiting.</div>
-        <button style="margin-top:16px; background:var(--neon-pink); border:none; color:#000; font-family:'Bangers',cursive; font-size:1.1rem; letter-spacing:3px; padding:12px 30px; cursor:pointer; animation:btnBounce 1.5s ease-in-out infinite;" onclick="event.stopPropagation(); alert('🥁 CTO APPLICATION RECEIVED\n\nThis is our most important hire.\nWe will tung you within 2 hours.\n\nTUNG TUNG TUNG SAHUR.')">APPLY FOR CTO →</button>
+        <button style="margin-top:16px; background:var(--neon-pink); border:none; color:#000; font-family:'Bangers',cursive; font-size:1.1rem; letter-spacing:3px; padding:12px 30px; cursor:pointer; " onclick="event.stopPropagation(); alert('🥁 CTO APPLICATION RECEIVED\n\nThis is our most important hire.\nWe will tung you within 2 hours.\n\nTUNG TUNG TUNG SAHUR.')">APPLY FOR CTO →</button>
       </div>
 
     </div>
 
     <!-- Apply CTA -->
-    <div style="margin-top:40px; padding:50px 40px; background:rgba(255,255,255,0.02); border:2px solid rgba(255,0,110,0.2); position:relative; overflow:hidden; animation:openCardPulse 2.5s ease-in-out infinite;">
+    <div style="margin-top:40px; padding:50px 40px; background:rgba(255,255,255,0.02); border:2px solid rgba(255,0,110,0.2); position:relative; overflow:hidden; ">
       <div style="position:absolute; inset:0; background:radial-gradient(ellipse at center, rgba(255,0,110,0.06) 0%, transparent 70%); pointer-events:none;"></div>
       <div style="position:relative; z-index:1; text-align:center;">
         <div style="font-family:'Bangers',cursive; font-size:clamp(1.8rem,5vw,3.5rem); letter-spacing:4px; color:#fff; margin-bottom:8px;">THIS IS OUR ONLY OPEN ROLE.</div>
-        <div style="font-family:'Bangers',cursive; font-size:clamp(1rem,3vw,1.5rem); letter-spacing:3px; color:var(--neon-pink); margin-bottom:20px; animation:badgePulse 1.2s ease-in-out infinite alternate;">THE DRUM IS WAITING FOR ITS CTO.</div>
+        <div style="font-family:'Bangers',cursive; font-size:clamp(1rem,3vw,1.5rem); letter-spacing:3px; color:var(--neon-pink); margin-bottom:20px; ">THE DRUM IS WAITING FOR ITS CTO.</div>
         <p style="color:#666; max-width:500px; margin:0 auto 30px; line-height:1.8; font-size:0.88rem;">Email your CV, LinkedIn, and a short note on what you'd do in your first 30 days to:</p>
         <a href="mailto:tungtungrecruiting@gmail.com" style="display:inline-block; font-family:'Bangers',cursive; font-size:clamp(1rem,2.5vw,1.6rem); letter-spacing:2px; color:var(--neon-yellow); text-decoration:none; border-bottom:2px solid var(--neon-yellow); padding-bottom:2px; margin-bottom:30px; transition:opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">tungtungrecruiting@gmail.com</a>
         <div>
-          <button onclick="window.location.href='mailto:tungtungrecruiting@gmail.com?subject=CTO Application — TungCorp&body=I am ready to lead your engineering organisation. The drum will not have to wait much longer.'" style="font-family:'Bangers',cursive; font-size:1.3rem; letter-spacing:3px; padding:18px 40px; background:var(--neon-pink); border:none; color:#000; cursor:pointer; animation:btnBounce 2s ease-in-out infinite;">APPLY FOR CTO →</button>
+          <button onclick="window.location.href='mailto:tungtungrecruiting@gmail.com?subject=CTO Application — TungCorp&body=I am ready to lead your engineering organisation. The drum will not have to wait much longer.'" style="font-family:'Bangers',cursive; font-size:1.3rem; letter-spacing:3px; padding:18px 40px; background:var(--neon-pink); border:none; color:#000; cursor:pointer; ">APPLY FOR CTO →</button>
         </div>
         <p style="color:#333; font-size:0.68rem; margin-top:20px; letter-spacing:1px;">TungCorp is an equal opportunity employer. All offers contingent on drum background check. The tung does not discriminate.</p>
       </div>
@@ -1618,6 +1639,14 @@ footer {
 </div>
 
 <div class="divider"></div>
+
+<!-- ── IMAGE FULLWIDTH ── -->
+<div style="height:500px; overflow:hidden; position:relative;">
+  <img src="tung/tung1.png" style="width:100%; height:100%; object-fit:cover; object-position:top 20%; display:block;">
+  <div style="position:absolute; inset:0; background:linear-gradient(transparent 40%, #000); display:flex; align-items:flex-end; padding:40px 60px;">
+    <div style="font-family:'Bangers',cursive; font-size:clamp(2rem,5vw,4rem); letter-spacing:4px; color:#fff; line-height:1; text-shadow:0 2px 20px rgba(0,0,0,0.8);">THE TUNG DOES NOT SLEEP.<br><span style="color:var(--neon-pink);">NEITHER SHOULD YOUR CTO SEARCH.</span></div>
+  </div>
+</div>
 
 <!-- ═══════════════════════════════ LEADERSHIP ═══════════════════════════════ -->
 <section style="max-width:1100px; margin:0 auto; padding:100px 20px;">
@@ -1651,9 +1680,9 @@ footer {
       </div>
       <div class="exec-info">
         <div class="exec-name" style="color:#555; font-style:italic;">[ Unfilled ]</div>
-        <div class="exec-title-tag" style="color:var(--neon-yellow); animation:badgePulse 1.2s ease-in-out infinite alternate;">Chief Technology Officer</div>
+        <div class="exec-title-tag" style="color:var(--neon-yellow); ">Chief Technology Officer</div>
         <div class="exec-bio" style="color:#444;">Our CTO seat has been empty since Q1 2025. TungStack™ is scaling to 1B daily tungs and we are doing it without a technical co-leader. This is not ideal. We need someone extraordinary. You will own the entire engineering org, the percussive infrastructure roadmap, and the Large Drum Model. This is the most important hire we have ever made.</div>
-        <a href="#careers" onclick="event.stopPropagation()" style="display:inline-block; margin-top:4px; background:var(--neon-pink); color:#000; font-family:'Bangers',cursive; font-size:0.9rem; letter-spacing:2px; padding:8px 18px; text-decoration:none; animation:btnBounce 1.5s ease-in-out infinite;">→ APPLY NOW</a>
+        <a href="#careers" onclick="event.stopPropagation()" style="display:inline-block; margin-top:4px; background:var(--neon-pink); color:#000; font-family:'Bangers',cursive; font-size:0.9rem; letter-spacing:2px; padding:8px 18px; text-decoration:none; ">→ APPLY NOW</a>
       </div>
     </div>
 
@@ -1777,34 +1806,7 @@ footer {
 </footer>
 
 <script>
-// ── MATRIX RAIN
-(function() {
-  const canvas = document.getElementById('matrix');
-  const ctx = canvas.getContext('2d');
-  let W, H, cols, drops;
-  const chars = 'TUNGTUNGSAHUR0123456789🥁⭐💥';
-  function init() {
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-    cols = Math.floor(W / 16);
-    drops = Array(cols).fill(1);
-  }
-  function draw() {
-    ctx.fillStyle = 'rgba(0,0,0,0.05)';
-    ctx.fillRect(0, 0, W, H);
-    ctx.fillStyle = '#06d6a0';
-    ctx.font = '13px monospace';
-    for (let i = 0; i < drops.length; i++) {
-      const c = chars[Math.floor(Math.random() * chars.length)];
-      ctx.fillText(c, i * 16, drops[i] * 16);
-      if (drops[i] * 16 > H && Math.random() > 0.975) drops[i] = 0;
-      drops[i]++;
-    }
-  }
-  init();
-  window.addEventListener('resize', init);
-  setInterval(draw, 50);
-})();
+
 
 // ── STAT NUMBER COUNT-UP
 document.querySelectorAll('.stat-num[data-target]').forEach(el => {
@@ -1879,44 +1881,6 @@ document.querySelectorAll('.lore-card, .testimonial-card, .feature-pill, .counte
   staggerObserver.observe(el);
 });
 
-// ── RANDOM TUNG SOUND ON CLICK (visual feedback)
-document.addEventListener('click', (e) => {
-  const el = document.createElement('div');
-  el.textContent = ['TUNG!', 'TUNG!', 'TUNG!', 'SAHUR!'][Math.floor(Math.random() * 4)];
-  el.style.cssText = `
-    position: fixed;
-    left: ${e.clientX}px;
-    top: ${e.clientY}px;
-    font-family: 'Bangers', cursive;
-    font-size: ${1 + Math.random()}rem;
-    color: hsl(${Math.random()*360}, 100%, 60%);
-    pointer-events: none;
-    z-index: 99999;
-    transform: translate(-50%, -50%);
-    animation: clickPop 0.7s ease forwards;
-  `;
-  document.body.appendChild(el);
-  setTimeout(() => el.remove(), 700);
-});
-
-// ── JOB ROW APPLY
-function applyNow(el) {
-  el.classList.toggle('expanded');
-  const title = el.querySelector('.job-title').textContent;
-  const wasExpanded = el.classList.contains('expanded');
-  if (wasExpanded) {
-    const btn = el.querySelector('.apply-btn');
-    if (!btn) {
-      const b = document.createElement('button');
-      b.className = 'apply-btn';
-      b.textContent = '→ APPLY FOR THIS ROLE';
-      b.style.cssText = 'margin-top:12px; background:var(--neon-pink); border:none; color:#000; font-family:Bangers,cursive; font-size:0.95rem; letter-spacing:2px; padding:8px 20px; cursor:pointer;';
-      b.onclick = (e) => { e.stopPropagation(); alert(`🥁 APPLICATION SUBMITTED\n\nRole: ${title}\n\nWe will tung you within 24 hours.\n\nTUNG TUNG TUNG SAHUR.`); };
-      el.appendChild(b);
-    }
-  }
-}
-
 // inject keyframe
 const style = document.createElement('style');
 style.textContent = `
@@ -1928,18 +1892,7 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// ── KONAMI TUNG
-let keys = [];
-const KONAMI = [38,38,40,40,37,39,37,39,66,65];
-document.addEventListener('keydown', e => {
-  keys.push(e.keyCode);
-  if (keys.length > 10) keys.shift();
-  if (keys.join(',') === KONAMI.join(',')) {
-    document.body.style.animation = 'titleGlitch 0.1s infinite';
-    setTimeout(() => document.body.style.animation = '', 3000);
-    alert('🥁 ULTRA TUNG ACTIVATED 🥁\n\nYou found the secret code.\nThe tung is pleased.\nTUNG TUNG TUNG SAHUR.');
-  }
-});
+
 </script>
 </body>
 </html>
